@@ -9,8 +9,8 @@ import datetime
 import time
 #
 config = {
-    'proxy_host': 'localhost',
-    'proxy_port': 8998
+#    'proxy_host': 'localhost',
+#    'proxy_port': 8998
 }
 tornado.httpclient.AsyncHTTPClient.configure(
     "tornado.curl_httpclient.CurlAsyncHTTPClient")
