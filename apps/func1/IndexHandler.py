@@ -7,6 +7,7 @@ import urllib
 import json
 import datetime
 import time
+#
 config = {
     'proxy_host': 'localhost',
     'proxy_port': 8998
@@ -27,4 +28,21 @@ class IndexHandler(tornado.web.RequestHandler):
         self.write(response.body)
         self.finish()
 
-
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+    def post(self):
+        param=self.request.body.decode('utf-8')
+        param=json.loads(param)
+        myurl=param.get('keyl','NA')
+        if myurl == 'NA':
+            self.write('need para in body keyl')
+            self.finish()
+            return
+        client = tornado.httpclient.AsyncHTTPClient()
+        response = yield tornado.gen.Task(client.fetch,myurl,**config)
+        for x in response.headers.get_all():
+            print(x)
+            #self.set_header(x[0],x[1])
+        self.write(response.body)
+        self.finish()
+        

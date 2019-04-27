@@ -3,15 +3,20 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.httpclient
+import tornado.autoreload
 from tornado.options import define, options
 from apps import func1
 define("port", default=8000, help="run on the given port", type=int)
+settings = {
+            'debug':True,
+           # other stuff
+           }
 resgister_list=[]
 resgister_list.extend(func1.getlist())
 print(resgister_list)
 if __name__ == '__main__':
     tornado.options.parse_command_line()
-    app = tornado.web.Application(handlers=resgister_list)
+    app = tornado.web.Application(handlers=resgister_list, **settings)
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
