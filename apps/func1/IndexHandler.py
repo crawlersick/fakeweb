@@ -7,6 +7,8 @@ import urllib
 import json
 import datetime
 import time
+from stringendcode import *
+import base64
 #
 config = {
 #    'proxy_host': 'localhost',
@@ -38,11 +40,13 @@ class IndexHandler(tornado.web.RequestHandler):
             self.write('need para in body keyl')
             self.finish()
             return
+        myurl= dec(myurl)
         client = tornado.httpclient.AsyncHTTPClient()
         response = yield tornado.gen.Task(client.fetch,myurl,**config)
         for x in response.headers.get_all():
             print(x)
             #self.set_header(x[0],x[1])
-        self.write(response.body)
+        #self.write(response.body)
+        self.write(base64.b64encode(response.body))
         self.finish()
         
