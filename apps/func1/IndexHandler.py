@@ -40,9 +40,16 @@ class IndexHandler(tornado.web.RequestHandler):
             self.write('need para in body keyl')
             self.finish()
             return
-        myurl= dec(myurl)
-        print('fetch... '+myurl)
-        client = tornado.httpclient.AsyncHTTPClient()
+        try:
+            myurl= dec(myurl)
+            print('fetch... '+myurl)
+            client = tornado.httpclient.AsyncHTTPClient()
+        except Exception as e:
+            print("Error %s" % e)
+            self.write({"msg":"invalid keyl,error found"})
+            self.finish()
+            return 
+            
         try:
             response = yield tornado.gen.Task(client.fetch,myurl,validate_cert=False,**config)
         except Exception as e:
@@ -54,6 +61,10 @@ class IndexHandler(tornado.web.RequestHandler):
                 print(x)
                 #self.set_header(x[0],x[1])
             #self.write(response.body)
-            self.write(base64.b64encode(response.body))
+            try:
+                self.write(base64.b64encode(response.body))
+            except Exception as e:
+                print("Error %s" % e)
+                self.write({"msg":"invalid response,error found"})
             self.finish()
         
