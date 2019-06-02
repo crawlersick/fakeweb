@@ -5,6 +5,10 @@ fakeweb,using tornato web severice for web re-direct
 run you app in localhost:8000 by 
 python app.py
 
+ENVIROMENT:
+set up your password in ~/.config/fakeweb
+install zip , python-tornado , pycurl
+
 1. encode your request url
 callenc.sh 'http://baidu.com'
 aHR0cDovL2JhaWR1LmNvbQ==
