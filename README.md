@@ -23,3 +23,5 @@ echo -n 'PGh0bWw+CjxtZXRhIGh0dHAtZXF1aXY9InJlZnJlc2giIGNvbnRlbnQ9IjA7dXJsPWh0dHA
 <meta http-equiv="refresh" content="0;url=http://www.baidu.com/">
 </html>
 
+for proxy function:
+curl -X POST -d '{"keyl":"http://baidu.com"}' http://127.0.0.1:5555/proxy
