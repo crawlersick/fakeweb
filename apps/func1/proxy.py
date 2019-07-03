@@ -22,12 +22,15 @@ class proxypost(tornado.web.RequestHandler):
     def post(self):
         param=self.request.body.decode('utf-8')
         param=json.loads(param)
-        myurl=param.get('keyl','NA')
-        if myurl == 'NA':
-            self.write('need para in body keyl')
+        #myurl=param.get('keyl','NA')
+        cnt=param.get('cnt','NA')
+        looplist=param.get('looplist',[])
+        if cnt == 'NA' or not looplist:
+            self.write('need cnt and looplist')
             self.finish()
             return
         try:
+            i
             print('fetch... '+myurl)
             client = tornado.httpclient.AsyncHTTPClient()
         except Exception as e:
