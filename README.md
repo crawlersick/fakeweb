@@ -30,5 +30,5 @@ echo -n 'PGh0bWw+CjxtZXRhIGh0dHAtZXF1aXY9InJlZnJlc2giIGNvbnRlbnQ9IjA7dXJsPWh0dHA
 ```
 for proxy function:
 ```
-curl -X POST -d '{"keyl":"http://baidu.com"}' http://127.0.0.1:5555/proxy
+curl -X POST -d '{"keyl":"http://127.0.0.1:5678/my_def_api_hello?qry1=asdfasdfasfsdf"}' http://127.0.0.1:8000/do
 ```
