@@ -1,0 +1,13 @@
+PyMySQL
+pandas
+numpy
+scipy
+dateparser
+xlrd
+sqlalchemy
+tornado
+pycurl
+rsa
+python-gnupg
+xlwt
+openpyxl

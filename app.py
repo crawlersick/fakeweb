@@ -20,6 +20,6 @@ if __name__ == '__main__':
     tornado.options.parse_command_line()
     app = tornado.web.Application(handlers=resgister_list, **settings)
     http_server = tornado.httpserver.HTTPServer(app)
-    listenport=options.port if len(plist)<1 else plist[0]
+    listenport = options.port if len(plist) < 1 else plist[0]
     http_server.listen(listenport)
     tornado.ioloop.IOLoop.instance().start()
