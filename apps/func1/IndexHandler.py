@@ -17,22 +17,18 @@ config = {
 tornado.httpclient.AsyncHTTPClient.configure(
     "tornado.curl_httpclient.CurlAsyncHTTPClient")
 class IndexHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
-    def get(self):
+    async def get(self):
         query = self.get_argument('q')
         client = tornado.httpclient.AsyncHTTPClient()
-        response = yield tornado.gen.Task(
-                client.fetch,"http://search.twitter.com/search.json?" + \
+        response = await client.fetch(
+                "http://search.twitter.com/search.json?" + \
                 urllib.parse.urlencode({"q": query, "result_type": "recent", "rpp": 100}),
                 **config
                 )
         self.write(response.body)
         self.finish()
 
-    @tornado.web.asynchronous
-    @tornado.gen.engine
-    def post(self):
+    async def post(self):
         param=self.request.body.decode('utf-8')
         param=json.loads(param)
         myurl=param.get('keyl','NA')
@@ -51,7 +47,7 @@ class IndexHandler(tornado.web.RequestHandler):
             return 
             
         try:
-            response = yield tornado.gen.Task(client.fetch,myurl,validate_cert=False,**config)
+            response = await client.fetch(myurl,validate_cert=False,**config)
         except Exception as e:
             print("Error %s" % e)
             self.write({"msg":"error found"})
