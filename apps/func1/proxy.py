@@ -14,6 +14,7 @@ from stringendcode import *
 import base64
 
 # curl -X POST -d '{"keyl":"http://baidu.com/"}' http://127.0.0.1:8000/do
+#curl -H 'Content-Type: application/json' -X POST localhost:8000/do -d '{"keyl":"https://www.baidu.com"}'
 config = {
     #    'proxy_host': 'localhost',
     #    'proxy_port': 8998
@@ -21,7 +22,7 @@ config = {
 tornado.httpclient.AsyncHTTPClient.configure(
     "tornado.curl_httpclient.CurlAsyncHTTPClient")
 
-myHeader = {'user-agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1'}
+myHeader = {'user-agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0.1) Gecko/20191022 Firefox/70.0.1'}
 
 class proxypost(ApiCommon):
     @tornado.gen.coroutine
