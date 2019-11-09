@@ -4,6 +4,8 @@ import tornado.options
 import tornado.web
 import tornado.httpclient
 import tornado.gen
+from apps.comm.ApiPre import ApiCommon
+import logging
 import urllib
 import json
 import datetime
@@ -19,40 +21,42 @@ config = {
 tornado.httpclient.AsyncHTTPClient.configure(
     "tornado.curl_httpclient.CurlAsyncHTTPClient")
 
+myHeader = {'user-agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1'}
 
-class proxypost(tornado.web.RequestHandler):
+class proxypost(ApiCommon):
     @tornado.gen.coroutine
     def post(self):
-        param = self.request.body.decode('utf-8')
-        param = json.loads(param)
+        param = self.my_get_post_data()
         myurl = param.get('keyl', 'NA')
         if myurl == 'NA' or not myurl:
             self.write('need keyl')
             self.finish()
             return
         try:
-            print('fetch... ' + myurl)
+            logging.info('fetch... ' + myurl)
             client = tornado.httpclient.AsyncHTTPClient()
         except Exception as e:
-            print("Error %s" % e)
+            logging.info("Error %s" % e)
             self.write({"msg": "invalid keyl,error found"})
             self.finish()
             return
 
         try:
-            response = yield client.fetch(myurl,headers={'a':'b'}) #, validate_cert=False)# , **config)
+            response = yield client.fetch(myurl,headers=myHeader) #, validate_cert=False)# , **config)
         except Exception as e:
-            print("Error %s" % e)
+            logging.info("Error %s" % e)
             self.write({"msg": "error found"})
             self.finish()
         else:
+            logging.info('>>>>>>>>>get target page header:')
             for x in response.headers.get_all():
-                print(x)
+                logging.info(x)
                 # self.set_header(x[0],x[1])
             # self.write(response.body)
             try:
                 self.write(response.body)
             except Exception as e:
-                print("Error %s" % e)
+                logging.info("Error %s" % e)
                 self.write({"msg": "invalid response,error found"})
+            logging.info('<<<<<<<<<<<<<<<<<<<<<<<<<<<request end')
             self.finish()
