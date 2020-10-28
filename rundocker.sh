@@ -1,1 +1,1 @@
-docker rm -f fakeweb; docker run --restart=always  -d -v $PWD:/usr/src/app -p 8000:8000 --name fakeweb dk_tornado bash -c ' python app.py'
+docker rm -f fakeweb; docker run --log-driver json-file --log-opt max-size=10m --log-opt max-file=10 --restart=always  -d -v $PWD:/usr/src/app -p 8000:8000 --name fakeweb dk_tornado bash -c ' python app.py'
