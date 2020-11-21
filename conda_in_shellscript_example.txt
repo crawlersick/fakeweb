@@ -1,0 +1,1 @@
+ssh sick@192.3.67.204 -p 21229 'source ~/miniconda3/bin/activate base ; python --version'
